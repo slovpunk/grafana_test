@@ -11,9 +11,14 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private final UserRepository userRepository;
+  private final FakerService fakerService;
 
   public List<User> getAllUsers() {
     return userRepository.findAll();
+  }
+
+  public void fakeUsers() {
+    fakerService.fakeData();
   }
 
 }
