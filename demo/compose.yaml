@@ -36,5 +36,29 @@ services:
       monitoring:
         aliases:
           - prometheus
+
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - 8086:8086
+#    Попробовать создать volume, поскольку в докере показывает только маунты
+    volumes:
+      - ./influxdb-storage:/var/lib/influxdb
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: myUsername
+      DOCKER_INFLUXDB_INIT_PASSWORD: myPassword
+      DOCKER_INFLUXDB_INIT_ORG: myOrg
+      DOCKER_INFLUXDB_INIT_BUCKET: myBucket
+      DOCKER_INFLUXDB_INIT_RETENTION: 365d
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: mySecretToken
+      INFLUXDB_DB: mydb
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: admin
+    networks:
+      monitoring:
+        aliases:
+          - influxdb
+
 networks:
   monitoring:
